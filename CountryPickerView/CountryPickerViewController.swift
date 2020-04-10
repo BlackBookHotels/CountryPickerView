@@ -68,6 +68,7 @@ extension CountryPickerViewController {
             countries[preferredTitle] = dataSource.preferredCountries
         }
         
+        tableView.backgroundColor = #colorLiteral(red: 0.1294117647, green: 0.1294117647, blue: 0.1294117647, alpha: 1)
         tableView.sectionIndexBackgroundColor = .clear
         tableView.sectionIndexTrackingBackgroundColor = .clear
     }
@@ -96,6 +97,9 @@ extension CountryPickerViewController {
         searchController?.definesPresentationContext = true
         searchController?.searchBar.delegate = self
         searchController?.delegate = self
+        //searchController?.searchBar.placeholder = "Search Countries"
+        //searchController?.searchBar.tintColor = .black
+        
 
         switch searchBarPosition {
         case .tableViewHeader: tableView.tableHeaderView = searchController?.searchBar
@@ -149,6 +153,10 @@ extension CountryPickerViewController {
         if let color = dataSource.cellLabelColor {
             cell.textLabel?.textColor = color
         }
+        if let color = dataSource.cellBackgroundColor {
+            cell.backgroundColor = color
+        }
+        
         cell.accessoryType = country == countryPickerView.selectedCountry &&
             dataSource.showCheckmarkInList ? .checkmark : .none
         cell.separatorInset = .zero
@@ -312,6 +320,10 @@ class CountryPickerViewDataSourceInternal: CountryPickerViewDataSource {
     
     var cellLabelColor: UIColor? {
         return view.dataSource?.cellLabelColor(in: view)
+    }
+    
+    var cellBackgroundColor: UIColor? {
+        return view.dataSource?.cellBackgroundColor(in: view)
     }
     
     var cellImageViewSize: CGSize {
